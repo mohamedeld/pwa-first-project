@@ -12,7 +12,8 @@ let cacheAssets = [
 self.addEventListener("install",async ()=>{
     console.log("installed");
     let createdCache = await caches.open(cacheName);
-    await createdCache.addAll(cacheAssets)
+    await createdCache.addAll(cacheAssets);
+    await self.skipWaiting();
 }); // end of install
 
 self.addEventListener("activate",async ()=>{
@@ -27,5 +28,23 @@ self.addEventListener("activate",async ()=>{
 
 self.addEventListener("fetch",async (event)=>{
     // console.log("fetched",event.request);
-    return await event.respondWith(caches.match(event.request));
+    // return await event.respondWith(caches.match(event.request));
+    if(!navigator.online){
+        // return await event.respondWith(caches.match(event.request))
+        return await cacheFirst(event.request);
+    }else{
+        // return await event.respondWith(fetch(event.request));
+        return await networkFirst(event.request); 
+    }
 }); //end of fetch 
+
+async function cacheFirst(request){
+    return await caches.match(request)
+};
+
+async function networkFirst(request){
+    let dynamicCaches = await caches.open("dynamic-cache");
+    let response = await fetch(request);
+    await dynamicCaches.put(request,response.clone());
+    return response;
+}

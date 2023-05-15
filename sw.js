@@ -15,10 +15,17 @@ self.addEventListener("install",async ()=>{
     await createdCache.addAll(cacheAssets)
 }); // end of install
 
-self.addEventListener("activate",()=>{
-    console.log("activated");
+self.addEventListener("activate",async ()=>{
+    // console.log("activated");
+    let allCaches = await caches.keys();
+    for(let i=0;i<allCaches.length;i++){
+        if(allCaches[i] != cacheName){
+            await caches.delete(allCaches[i]);
+        }
+    }
 }); // end of activate
 
-self.addEventListener("fetch",(event)=>{
-    console.log("fetched",event.request);
+self.addEventListener("fetch",async (event)=>{
+    // console.log("fetched",event.request);
+    return await event.respondWith(caches.match(event.request));
 }); //end of fetch 

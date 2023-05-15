@@ -69,3 +69,25 @@ header nav ul li a.active{
     object-fit: cover;
     
 }
+
+#data{
+    padding:5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width:70%;
+    margin:auto;
+}
+#data #post-select{
+    width:100%;
+    padding:.5rem 0rem;
+}
+#data #posts-container{
+    width:100%;
+    background-color: tomato;
+    color:#fff;
+    padding:1rem;
+    margin-top:1rem;
+    border:1px solid tomato;
+}

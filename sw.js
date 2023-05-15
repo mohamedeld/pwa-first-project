@@ -5,9 +5,10 @@ let cacheAssets = [
     "./contact.html",
     "./services.html",
     "./style.css",
-    "./images/team3.jpg",
-    "./images/team6.jpg",
-    "./images/team8.jpg"
+    "/src/images/team3.jpg",
+    "/src/images/team6.jpg",
+    "/src/images/team8.jpg",
+    "./fallback.json"
 ]
 self.addEventListener("install",async ()=>{
     console.log("installed");
